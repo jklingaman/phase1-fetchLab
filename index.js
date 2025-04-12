@@ -1,21 +1,22 @@
 
 function fetchBooks() {
-  // To pass the tests, don't forget to return your fetch!
-  fetch("https://anapioficeandfire.com/api/books")
-  .then((resp) => resp.json())
-  .then((json) => {
-    const fifthBook = json[4];
-    renderBooks([fifthBook])
+  return fetch("https://anapioficeandfire.com/api/books")
+    .then((resp) => resp.json())
+    .then((json) => {
+      const fifthBook = json[4];
+      renderBooks([fifthBook]);
 
-    const totalPages = countPages(json);
-    renderTotalPages(totalPages)
-  });
-  fetch("https://anapioficeandfire.com/api/characters/1031")
-  .then((resp) => resp.json())
-  .then((json) => {
-    const characterName = json.name;
-    renderName(characterName)
-  });
+      const totalPages = countPages(json);
+      renderTotalPages(totalPages);
+    })
+    .then(() => {
+      return fetch("https://anapioficeandfire.com/api/characters/1031")
+        .then((resp) => resp.json())
+        .then((json) => {
+          const characterName = json.name;
+          renderName(characterName);
+        });
+    });
 }
 
 function renderBooks(books) {
